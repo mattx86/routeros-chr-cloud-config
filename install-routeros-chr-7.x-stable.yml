@@ -1,0 +1,13 @@
+#cloud-config
+# Cloud: Hetzner Cloud (though this may work with your cloud without any changes)
+# Instance Type: Shared vCPU, CPX11 (2 vCPU, 2GB RAM)
+# OS: Ubuntu 22.04
+#
+# This downloads the latest RouterOS CHR 7.x Stable image, writes it to disk
+# (/dev/sda by default--see below), maximizes the main partition, and reboots.
+#
+runcmd:
+  - apt-get update >/dev/tty1 2>&1
+  - apt-get install -y ufw curl unzip squashfs-tools xorriso >/dev/tty1 2>&1
+  - ufw allow 22 >/dev/tty1 2>&1
+  - ufw enable >/dev/tty1 2>&1
