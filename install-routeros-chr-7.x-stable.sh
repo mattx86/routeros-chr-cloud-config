@@ -1,4 +1,6 @@
 #!/bin/bash
+CHR_DISK="${1:-/dev/sda}"
+
 CHR_ZIP_URL=$(curl -Ls https://mikrotik.com/download | egrep -o 'https://.*/chr-7\.[0-9.]+\.img\.zip')
 CHR_ZIP=/root/${CHR_ZIP_URL##*/}
 CHR_IMG=${CHR_ZIP%*.zip}
@@ -25,7 +27,15 @@ cp $CHR_IMG $FINNIX_UNSQUASHED/root/
 # Create Finnix ISO's rc.local script for installing CHR.
 cat <<EOF >$FINNIX_UNSQUASHED/etc/rc.local
 #!/bin/bash
-echo "Hello World" > /tmp/test.txt
+PART_NUM=2
+PART_NEW_SIZE=\$(lsblk $CHR_DISK | egrep "^${CHR_DISK##*/}" | awk '{match(\$4, /([A-Z])/, unit); sub(/[A-Z]/, "", \$4); size=\$4; print size unit[1]"iB"}')
+
+dd if=$CHR_IMG of=$CHR_DISK bs=10M
+parted $CHR_DISK resizepart \$PART_NUM \$PART_NEW_SIZE
+e2fsck -fp ${CHR_DISK}\${PART_NUM}
+resize2fs ${CHR_DISK}\${PART_NUM}
+
+reboot
 exit 0
 EOF
 chmod +x $FINNIX_UNSQUASHED/etc/rc.local
