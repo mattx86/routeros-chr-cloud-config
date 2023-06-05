@@ -1,5 +1,5 @@
 # routeros-chr-cloud-config
-Cloud Configs for downloading and installing MikroTik RouterOS CHR
+Cloud Configs for installing MikroTik RouterOS CHR
 
 ## How to use
 1. Choose the cloud config `.yml` file that best suits you.
