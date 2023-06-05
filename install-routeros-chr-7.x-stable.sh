@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Copyright (c) 2023 Matt Smith
+# MIT License
+#
 CHR_DISK="${1:-/dev/sda}"
 
 CHR_ZIP_URL=$(curl -Ls https://mikrotik.com/download | egrep -o 'https://.*/chr-7\.[0-9.]+\.img\.zip')
