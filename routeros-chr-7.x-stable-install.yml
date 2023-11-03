@@ -15,6 +15,6 @@ runcmd:
   - apt-get update >/dev/tty1 2>&1
   - apt-get install -y ufw curl unzip squashfs-tools xorriso >/dev/tty1 2>&1
   - ufw enable >/dev/tty1 2>&1
-  - curl -Ls https://raw.githubusercontent.com/mattx86/routeros-chr-cloud-config/main/install-routeros-chr-7.x-stable.sh -o /root/install-routeros-chr-7.x-stable.sh
-  - chmod 700 /root/install-routeros-chr-7.x-stable.sh
-  - /root/install-routeros-chr-7.x-stable.sh /dev/sda >/dev/tty1 2>&1
+  - curl -Ls https://raw.githubusercontent.com/mattx86/routeros-chr-cloud-config/main/routeros-chr-7.x-stable.sh -o /root/routeros-chr-7.x-stable.sh
+  - chmod 700 /root/routeros-chr-7.x-stable.sh
+  - /root/routeros-chr-7.x-stable.sh /dev/sda install >/dev/tty1 2>&1

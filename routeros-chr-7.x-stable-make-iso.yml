@@ -1,0 +1,20 @@
+#cloud-config
+#
+# Copyright (c) 2023 Matt Smith
+# MIT License
+#
+# Cloud ........... : Hetzner Cloud (though this may work with your cloud without any changes)
+# Instance Type ... : Shared vCPU, CPX11 (2 vCPU, 2GB RAM)
+# OS .............. : Ubuntu 22.04
+#
+# Description ..... :
+# This downloads the latest RouterOS CHR 7.x Stable image and creates an install ISO
+# (based on Finnix), which installs to /dev/sda by default--see below.
+#
+runcmd:
+  - apt-get update >/dev/tty1 2>&1
+  - apt-get install -y ufw curl unzip squashfs-tools xorriso >/dev/tty1 2>&1
+  - ufw enable >/dev/tty1 2>&1
+  - curl -Ls https://raw.githubusercontent.com/mattx86/routeros-chr-cloud-config/main/routeros-chr-7.x-stable.sh -o /root/routeros-chr-7.x-stable.sh
+  - chmod 700 /root/routeros-chr-7.x-stable.sh
+  - /root/routeros-chr-7.x-stable.sh /dev/sda iso >/dev/tty1 2>&1
